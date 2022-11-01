@@ -8,12 +8,15 @@ let riddle = {
             let answer = yourAnswer.toLowerCase();
 
             if (answer === this.correctAnswer) {
+                this.tries = 0;
                return console.log(`Ваш ответ: ${yourAnswer}\nПравильный ответ!`);
             }
 
             if (answer !== this.correctAnswer && this.tries >= 1) {
                 --this.tries;
                 console.log(`Ваш ответ: ${yourAnswer}\nНеправильный ответ!`);
+                getHint.call(this);
+
                 return getMsgWithTries.call(this);
             }
         }
@@ -46,4 +49,12 @@ function getMsgWithTries() {
     }
 
     return console.log(`Осталось ${this.tries} попытки.`);
+}
+
+function getHint() {
+    const hint = this.hints[this.tries === 2 ? 0 : 1];
+
+    if (this.tries) {
+        console.log(`Подсказка: ${hint}`);
+    }
 }
